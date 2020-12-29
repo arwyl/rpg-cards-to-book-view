@@ -10,8 +10,8 @@ Currently some card-specific json properties and card elements are not supported
 - icon_back
 - background_image
 - rule element
-- fill
-- boxes
+- fill element
+- boxes element
 
 [Online example](https://arwyl.github.io/rpg-cards-to-book-view/)
 
