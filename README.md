@@ -6,6 +6,7 @@ Currently some card-specific json properties and card elements are not supported
 
 - icon
 - color
+- count
 - icon_back
 - background_image
 - rule element
