@@ -65,7 +65,7 @@ const elementRenderers = {
     description: elem => `<div><strong>${purify(elem.params[0])}</strong>: ${purify(elem.params[1])}</div>`,
     section: elem => `<div class="section"><strong><u>${purify(elem.params[0])}</u></strong>: ${purify(elem.params[1])}</div>`,
     bullet: elem => `<ul><li>${purify(elem.params[0])}</li></ul>`,
-    picture: elem => `<div class="picture" style="background-image: url("${purifyUrl(elem.params[0])}"); height: ${Number.parseInt(elem.params[1]) || 0}px"></div>`,
+    picture: elem => `<div class="picture" style="background-image: url('${purifyUrl(elem.params[0])}'); height: ${Number.parseInt(elem.params[1]) || 0}px"></div>`,
     dndstats: renderDndstats,
     text: elem => `<div>${purify(elem.params[0])}</div>`,
     rule: () => ""
