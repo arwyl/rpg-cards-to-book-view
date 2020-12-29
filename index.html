@@ -27,7 +27,8 @@
         <br />
 
         <div class="p-3 mb-2 bg-info text-dark">
-          Load any number of .json files with arrays of rpg cards and press Print in your browser.
+          Load any number of .json files with arrays of <a href="https://crobi.github.io/rpg-cards/">rpg cards</a> and
+          press Print.
         </div>
 
         <p>Loaded cards: <span id="span-count">0</span></p>
@@ -35,6 +36,8 @@
         <button class="btn btn-primary" type="button" id="button-load">Load from json files</button>
 
         <button class="btn btn-danger" type="button" id="button-clear">Clear cards</button>
+
+        <button class="btn btn-success" type="button" id="button-print">Print</button>
 
         <form style="display:none">
           <input type="file" id="file-load" name="files[]" multiple accept="application/JSON" />

@@ -61,9 +61,19 @@ file.onchange = evt => {
     evt.srcElement.form.reset();
 };
 
-document.getElementById("button-load").onclick = () => file.click();
-document.getElementById("button-clear").onclick = () => {
+document.getElementById("button-load").onclick = e => {
+    file.click();
+    e.target.blur();
+};
+
+document.getElementById("button-print").onclick = e => {
+    window.print();
+    e.target.blur();
+};
+
+document.getElementById("button-clear").onclick = e => {
     storage.remove(storageKey);
     cards = [];
     renderCards();
+    e.target.blur();
 };
