@@ -1,16 +1,61 @@
 <!doctype html>
 
-<html lang="en">
+<html lang="en" class="h-100">
+
 <head>
   <meta charset="utf-8">
 
   <title>Rpg cards to book view</title>
   <meta name="description" content="Rpg cards to book view">
   <meta name="author" content="arwyl">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+  <link href="https://rpg-cards.vercel.app/css/icons.css" rel="stylesheet" crossorigin="anonymous">
+
+  <link href="css/fonts.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
 </head>
 
-<body>
-  todo rpg-cards-to-book-view
+<body class="d-flex flex-column h-100">
+  <main class="flex-shrink-0">
+    <div class="container">
+      <div class="nonprintable">
+        <h2> rpg-cards-to-book-view</h2>
+        <br />
+
+        <div class="p-3 mb-2 bg-info text-dark">
+          Load any number of .json files with arrays of rpg cards and press Print in your browser.
+        </div>
+
+        <p>Loaded cards: <span id="span-count">0</span></p>
+
+        <button class="btn btn-primary" type="button" id="button-load">Load from json files</button>
+
+        <button class="btn btn-danger" type="button" id="button-clear">Clear cards</button>
+
+        <form style="display:none">
+          <input type="file" id="file-load" name="files[]" multiple accept="application/JSON" />
+        </form>
+        <hr />
+      </div>
+
+      <div id="div-cards">
+
+      </div>
+    </div>
+  </main>
+  <footer class="mt-auto py-3 bg-light nonprintable">
+    <div class="container">
+      <div>
+        <a class="text-muted" href="https://github.com/arwyl/rpg-cards-to-book-view">github</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/index.js"></script>
 </body>
+
 </html>
