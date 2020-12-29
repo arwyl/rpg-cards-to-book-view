@@ -19,7 +19,7 @@ Tested in Google Chrome only so may not work in other browsers.
 
 
 
-## Special thanks to 
+## Special thanks to
 
-- [crobi](https://github.com/crobi) for developing rpg-cards format
+- [crobi](https://github.com/crobi) for creating the rpg-cards format
 - [colinmarc](https://github.com/colinmarc) for a great DnD spellbook generator (from which I took some ideas and fonts)
