@@ -2,6 +2,7 @@
     font-family: BookInsanity, Georgia, 'Times New Roman', Times, serif;
     font-size: 0.8rem;
     page-break-inside: avoid;
+    margin-bottom: 1rem;
 }
 
 .rpg-card > .title {
@@ -21,8 +22,8 @@
   }
 
   .rpg-card > * {
-    margin-top: 0.4rem;
-    margin-bottom: 0.4rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
   }
 
   .rpg-card > .dndatsts-wrapper {
@@ -30,7 +31,7 @@
   }
 
   .rpg-card > .section {
-    margin-top: 1rem;
+    margin-top: 0.8rem;
   }
 
 @media print {

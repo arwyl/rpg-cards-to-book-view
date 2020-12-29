@@ -86,9 +86,8 @@ function renderCard(card) {
 <div class="rpg-card">
     <div class="title"><strong>${purify(card.title)}</strong></div>
     ${elementsHtml.join("\n")}
-</div>
-<hr />
-<br />`;
+    <hr />
+</div>`;
 }
 
 export default renderCard;
