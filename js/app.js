@@ -121,7 +121,21 @@ const App = {
             let func = null;
 
             if (this.sorting.by === "spellLevel") {
-                func = c => c.elements.filter(e => e.name === "subtitle").map(e => parseInt(e.params[0], 10) || -1)[0];
+                func = c => c.elements
+                    .filter(e => e.name === "subtitle")
+                    .map(e => {
+                        if (e.params[0]
+                            &&
+                            (
+                                e.params[0].indexOf("Cantrip") !== -1
+                                ||
+                                e.params[0].indexOf("cantrip") !== -1
+                            )) {
+                            return 0;
+                        }
+
+                        return parseInt(e.params[0], 10) || (this.sorting.desc ? -1 : 999);
+                    })[0];
             }
             else if (this.sorting.by === "element") {
                 if (this.sorting.byElement === "subtitle") {
