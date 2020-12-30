@@ -1,5 +1,5 @@
-import { createApp } from 'https://unpkg.com/vue@3.0.4/dist/vue.esm-browser.prod.js';
-
+import * as Vue from "https://unpkg.com/vue@3.0.4/dist/vue.esm-browser.prod.js"
+import VueDraggableNext from "./vue-draggable-next.js";
 import Card from "./card.js";
 import storage from "./storage.js";
 import sorter from "./card-sorter.js";
@@ -17,7 +17,6 @@ function isValidURL(str) {
     return !!pattern.test(str);
 }
 
-
 let initialCards = [];
 
 const stored = storage.get(storageKey);
@@ -31,8 +30,10 @@ if (stored) {
     }
 }
 
-
-const app = {
+const App = {
+    components: {
+        'draggable': VueDraggableNext.VueDraggableNext
+    },
     data() {
         return {
             cards: initialCards,
@@ -57,7 +58,7 @@ const app = {
             const tmp = [this.cards[index], this.cards[newIndex]];
             this.cards.splice(index, 2, tmp[1], tmp[0]);
 
-            store();
+            this.store();
 
             window.scrollBy({
                 top: height,
@@ -74,7 +75,7 @@ const app = {
             const tmp = [this.cards[newIndex], this.cards[index]];
             this.cards.splice(newIndex, 2, tmp[1], tmp[0]);
 
-            store();
+            this.store();
 
             window.scrollBy({
                 top: -height,
@@ -119,7 +120,10 @@ const app = {
         sort(e) {
             let func = null;
 
-            if (this.sorting.by === "element") {
+            if (this.sorting.by === "spellLevel") {
+                func = c => c.elements.filter(e => e.name === "subtitle").map(e => parseInt(e.params[0], 10) || -1)[0];
+            }
+            else if (this.sorting.by === "element") {
                 if (this.sorting.byElement === "subtitle") {
                     func = c => c.elements.filter(e => e.name === "subtitle").map(e => e.params[0])[0];
                 }
@@ -132,7 +136,7 @@ const app = {
             }
 
             this.cards = sorter(this.cards, func, this.sorting.desc);
-            store();
+            this.store();
             e.target.blur();
         },
         download(e) {
@@ -158,6 +162,9 @@ const app = {
             document.getElementById("file-load").click();
             e.target.blur();
         },
+        store() {
+            storage.set(storageKey, JSON.stringify(this.cards));
+        },
         load(e) {
             const files = e.target.files;
 
@@ -165,7 +172,7 @@ const app = {
 
             const allRead = () => {
                 this.cards = newCards;
-                store();
+                this.store();
             };
 
             let newCards = [];
@@ -194,8 +201,6 @@ const app = {
     }
 };
 
-const vm = createApp(app).mount('#app');
 
-function store() {
-    storage.set(storageKey, JSON.stringify(vm.cards));
-}
+const app = Vue.createApp(App);
+const vm = app.mount('#app');

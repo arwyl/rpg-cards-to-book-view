@@ -30,6 +30,9 @@
         <div class="p-3 mb-2 bg-info text-dark">
           Load any number of .json files with arrays of <a href="https://crobi.github.io/rpg-cards/">rpg cards</a> and
           press Print.
+          <br />
+          You can reorder cards anyway you want by dragging them or clicking up and down arrows to the left of card
+          title.
         </div>
 
         <p>Loaded cards: <span id="span-count">{{cards.length}}</span></p>
@@ -39,6 +42,7 @@
           <div class="p-2">
             <select class="form-control" v-model="sorting.by" @change="sorting.byElement = 'subtitle'">
               <option value="title">Title</option>
+              <option value="spellLevel">Spell level (experimental)</option>
               <option value="element">Element</option>
               <option value="firstTag">First tag name</option>
             </select>
@@ -96,59 +100,64 @@
       </div>
 
       <div>
-        <div v-for="(card, index) in cards" class="rpg-card" :class="{ 'simple-view': useSimplifiedView }">
-          <div class="d-flex flex-row">
-            <div class="card-moving nonprintable d-flex flex-column">
-              <i class="card-move-up fas fa-chevron-up" :class="{ disabled: index === 0 }" @click="moveUp(index)"></i>
-              <i class="card-move-down fas fa-chevron-down" :class="{ disabled: index === cards.length - 1 }"
-                @click="moveDown(index)"></i>
+        <draggable :list="cards" @change="store" drag-class="rpg-card-drag">
+          <div v-for="(card, index) in cards" class="rpg-card" :class="{ 'simple-view': useSimplifiedView }"
+            :key="card.title">
+            <div class="d-flex flex-row">
+              <div class="card-moving nonprintable d-flex flex-column">
+                <i class="card-move-up fas fa-chevron-up" :class="{ disabled: index === 0 }" @click="moveUp(index)"></i>
+                <i class="card-move-down fas fa-chevron-down" :class="{ disabled: index === cards.length - 1 }"
+                  @click="moveDown(index)"></i>
+              </div>
+              <div class="title"><strong>{{card.title}}</strong></div>
             </div>
-            <div class="title"><strong>{{card.title}}</strong></div>
-          </div>
-          <template v-if="!useSimplifiedView">
-            <template v-for="elem in card.elements">
-              <div v-if="elem.name === 'subtitle'" class="subtitle"><em>{{purify(elem.params[0])}}</em></div>
-              <div v-else-if="elem.name === 'property'"><strong>{{purify(elem.params[0])}}</strong>:
-                {{purify(elem.params[1])}}</div>
-              <div v-else-if="elem.name === 'description'"><strong>{{purify(elem.params[0])}}</strong>:
-                {{purify(elem.params[1])}}</div>
-              <div v-else-if="elem.name === 'section'" class="section">
-                <strong><u>{{purify(elem.params[0])}}</u></strong>: {{purify(elem.params[1])}}
-              </div>
-              <div v-else-if="elem.name === 'text'">
-                {{purify(elem.params[0])}}
-              </div>
-              <ul v-else-if="elem.name === 'bullet'">
-                <li>{{purify(elem.params[0])}}</li>
-              </ul>
-              <div v-else-if="elem.name === 'picture'" class="picture"
-                :style="{ backgroundImage: getPictureUrl(elem), height: getPictureHeight(elem) + 'px' }"></div>
-              <div v-else-if="elem.name === 'dndstats'" :set="stats = getDndStats(elem)" class="dndatsts-wrapper">
-                <table>
-                  <tbody>
-                    <tr>
-                      <th>STR</th>
-                      <th>DEX</th>
-                      <th>CON</th>
-                      <th>INT</th>
-                      <th>WIS</th>
-                      <th>CHA</th>
-                    </tr>
-                    <tr>
-                      <td>{{stats.stats[0]}}&nbsp;({{stats.mods[0]}})</td>
-                      <td>{{stats.stats[1]}}&nbsp;({{stats.mods[1]}})</td>
-                      <td>{{stats.stats[2]}}&nbsp;({{stats.mods[2]}})</td>
-                      <td>{{stats.stats[3]}}&nbsp;({{stats.mods[3]}})</td>
-                      <td>{{stats.stats[4]}}&nbsp;({{stats.mods[4]}})</td>
-                      <td>{{stats.stats[5]}}&nbsp;({{stats.mods[5]}})</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <template v-if="!useSimplifiedView">
+              <template v-for="elem in card.elements">
+                <div v-if="elem.name === 'subtitle'" class="subtitle"><em v-html="purify(elem.params[0])"></em></div>
+                <div v-else-if="elem.name === 'property'"><strong v-html="purify(elem.params[0])"></strong>: <span
+                    v-html="purify(elem.params[1])"></span>
+                </div>
+                <div v-else-if="elem.name === 'description'"><strong v-html="purify(elem.params[0])"></strong>:<span
+                    v-html="purify(elem.params[1])"></span>
+                </div>
+                <div v-else-if="elem.name === 'section'" class="section">
+                  <strong><u v-html="purify(elem.params[0])"></u></strong>: <span
+                    v-html="purify(elem.params[1])"></span>
+                </div>
+                <div v-else-if="elem.name === 'text'" v-html="purify(elem.params[0])">
+                </div>
+                <ul v-else-if="elem.name === 'bullet'">
+                  <li v-html="purify(elem.params[0])"></li>
+                </ul>
+                <div v-else-if="elem.name === 'picture'" class="picture"
+                  :style="{ backgroundImage: getPictureUrl(elem), height: getPictureHeight(elem) + 'px' }"></div>
+                <div v-else-if="elem.name === 'dndstats'" :set="stats = getDndStats(elem)" class="dndatsts-wrapper">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>STR</th>
+                        <th>DEX</th>
+                        <th>CON</th>
+                        <th>INT</th>
+                        <th>WIS</th>
+                        <th>CHA</th>
+                      </tr>
+                      <tr>
+                        <td>{{stats.stats[0]}}&nbsp;({{stats.mods[0]}})</td>
+                        <td>{{stats.stats[1]}}&nbsp;({{stats.mods[1]}})</td>
+                        <td>{{stats.stats[2]}}&nbsp;({{stats.mods[2]}})</td>
+                        <td>{{stats.stats[3]}}&nbsp;({{stats.mods[3]}})</td>
+                        <td>{{stats.stats[4]}}&nbsp;({{stats.mods[4]}})</td>
+                        <td>{{stats.stats[5]}}&nbsp;({{stats.mods[5]}})</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </template>
+              <hr />
             </template>
-            <hr />
-          </template>
-        </div>
+          </div>
+        </draggable>
       </div>
     </div>
   </main>

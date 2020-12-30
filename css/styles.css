@@ -3,6 +3,12 @@
     font-size: 0.8rem;
     page-break-inside: avoid;
     padding-bottom: 1rem;
+    cursor: move;
+}
+
+.rpg-card.rpg-card-drag {
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .rpg-card.simple-view{
