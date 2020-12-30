@@ -20,14 +20,39 @@ class Card {
 
         return new Card(
             rpgCardJson.title,
+            rpgCardJson.icon,
+            rpgCardJson.color,
+            rpgCardJson.icon_back,
+            rpgCardJson.background_image,
             elements,
             tags,
             rpgCardJson.count
         );
     }
 
+    static toRpgCardJson(card) {
+        if (!card) throw new Error("Argumet 'card' should have value");
+
+        let contents = card.elements.map(x => [x.name, ...x.params].join(' | '));
+
+        return {
+            title: card.title,
+            count: card.count,
+            icon: card.icon,
+            color: card.color,
+            icon_back: card.iconBack,
+            background_image: card.backgroundImage,
+            contents: contents,
+            tags: card.tags
+        };
+    }
+
     constructor(
         title,
+        icon,
+        color,
+        iconBack,
+        backgroundImage,
         elements,
         tags,
         count
@@ -38,6 +63,11 @@ class Card {
         this.elements = elements || [];
         this.tags = tags || [];
         this.count = count || 1;
+
+        this.icon = icon;
+        this.color = color;
+        this.iconBack = iconBack;
+        this.backgroundImage = backgroundImage;
     }
 }
 

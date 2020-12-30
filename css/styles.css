@@ -1,11 +1,29 @@
-.rpg-card{
+.rpg-card {
     font-family: BookInsanity, Georgia, 'Times New Roman', Times, serif;
     font-size: 0.8rem;
     page-break-inside: avoid;
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
 }
 
-.rpg-card > .title {
+.rpg-card.simple-view{
+  padding-bottom: 0;
+}
+
+.rpg-card .card-moving{
+  padding-right: 0.4rem;
+}
+
+.rpg-card .card-moving > i {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.rpg-card .card-moving > i.disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.rpg-card .title {
     font-size: 1.5rem;
     font-family: 'Mr Eaves Smallcaps', serif;
     color: #58170D;
@@ -36,6 +54,6 @@
 
 @media print {
     .nonprintable{
-        display: none;
+        display: none !important;
     }
  } 
