@@ -113,7 +113,7 @@ import storage from "./services/card-storage";
 import mapper from "./services/card-mapper";
 import sorter from "./services/card-sorter";
 
-let initialCards = [];
+let initialCards;
 
 try {
   initialCards = storage.get();
@@ -125,7 +125,7 @@ export default {
   name: "App",
   data() {
     return {
-      cards: initialCards,
+      cards: initialCards || [],
       useSimplifiedView: false,
     };
   },
