@@ -28,7 +28,10 @@
 
       <div class="d-flex d-flex-row">
         <div class="p-2">
-          <rpg-cards-loader @loaded="load"></rpg-cards-loader>
+          <rpg-cards-loader
+            @loaded="load"
+            @onError="onError"
+          ></rpg-cards-loader>
         </div>
         <div class="p-2">
           <button class="btn btn-primary" type="button" @click="download">
@@ -91,6 +94,7 @@
 </template>
 
 <script>
+import { useToast } from "vue-toastification";
 import card from "./components/Card.vue";
 import cardSimplified from "./components/CardSimplified.vue";
 import cardSorter from "./components/CardSorter.vue";
@@ -100,13 +104,21 @@ import draggable from "vuedraggable";
 import storage from "./services/card-storage";
 import mapper from "./services/card-mapper";
 import sorter from "./services/card-sorter";
+import Exception from "./models/exception";
+
+const toast = useToast();
 
 let initialCards;
+
+function showError(err) {
+  console.error(err.message, err);
+  toast.error(err.message + "\nSee console output for details.");
+}
 
 try {
   initialCards = storage.get();
 } catch (err) {
-  console.error("Error during loading cards from storage", err);
+  showError(new Exception("Error during loading cards from storage.", err));
 }
 
 export default {
@@ -132,7 +144,7 @@ export default {
             const res = mapper.fromRpgCardJson(x);
             return res;
           } catch (err) {
-            console.error(err);
+            showError(new Exception("Error during parsing file.", err));
             return undefined;
           }
         })
@@ -147,6 +159,9 @@ export default {
     print(e) {
       window.print();
       e.target.blur();
+    },
+    onError(e) {
+      showError(e.exception);
     },
   },
   components: {

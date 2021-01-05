@@ -17,9 +17,11 @@
 </template>
 
 <script>
+import Exception from "../models/exception";
+
 export default {
   name: "RpgCardsLoader",
-  emits: ["loaded"],
+  emits: ["loaded", "onError"],
   methods: {
     openDialog(e) {
       document.getElementById("file-load").click();
@@ -31,7 +33,6 @@ export default {
       let count = files.length;
 
       const allRead = () => {
-        console.log("load");
         this.$emit("loaded", { rpgCards: newCards });
       };
 
@@ -44,7 +45,9 @@ export default {
             const data = JSON.parse(reader.result);
             newCards = newCards.concat(data);
           } catch (err) {
-            console.error("File is not in correct format", err);
+            this.$emit("onError", {
+              exception: new Exception("File is not in correct format.", err),
+            });
           }
 
           if (!--count) {
