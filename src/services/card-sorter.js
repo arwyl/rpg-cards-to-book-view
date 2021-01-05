@@ -1,5 +1,3 @@
-import Card from "./card.js";
-
 function sort(cards, elementSelector, desc) {
     return cards.sort((a, b) => {
         if (elementSelector) {

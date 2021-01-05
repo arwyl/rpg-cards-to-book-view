@@ -13,7 +13,7 @@ Currently some card-specific json properties and card elements are not supported
 - fill element
 - boxes element
 
-[Online example](https://arwyl.github.io/rpg-cards-to-book-view/)
+[Online example](https://arwyl.github.io/rpg-cards-to-book-view/dist/index.html)
 
 Tested in Google Chrome only so may not work in other browsers.
 
