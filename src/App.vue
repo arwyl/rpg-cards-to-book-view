@@ -28,9 +28,7 @@
 
       <div class="d-flex d-flex-row">
         <div class="p-2">
-          <button class="btn btn-primary" type="button" @click="openFileDialog">
-            Load from json files
-          </button>
+          <rpg-cards-loader @loaded="load"></rpg-cards-loader>
         </div>
         <div class="p-2">
           <button class="btn btn-primary" type="button" @click="download">
@@ -61,17 +59,6 @@
           </div>
         </div>
       </div>
-
-      <form style="display: none">
-        <input
-          type="file"
-          id="file-load"
-          name="files[]"
-          multiple
-          accept="application/JSON"
-          @change="load"
-        />
-      </form>
       <hr />
     </section>
     <section>
@@ -107,6 +94,7 @@
 import card from "./components/Card.vue";
 import cardSimplified from "./components/CardSimplified.vue";
 import cardSorter from "./components/CardSorter.vue";
+import rpgCardsLoader from "./components/RpgCardsLoader.vue";
 import draggable from "vuedraggable";
 
 import storage from "./services/card-storage";
@@ -137,43 +125,19 @@ export default {
       this.cards = sorter(this.cards, e.elementSelector, e.desc);
       this.store();
     },
-    openFileDialog(e) {
-      document.getElementById("file-load").click();
-      e.target.blur();
-    },
     load(e) {
-      const files = e.target.files;
-
-      let count = files.length;
-
-      const allRead = () => {
-        this.cards = newCards;
-        this.store();
-      };
-
-      let newCards = [];
-      for (let i = 0, f; (f = files[i]); i++) {
-        const reader = new FileReader();
-
-        reader.onload = () => {
+      const mapped = e.rpgCards
+        .map((x) => {
           try {
-            const data = JSON.parse(reader.result);
-            newCards = newCards.concat(
-              data.map((x) => mapper.fromRpgCardJson(x))
-            );
+            const res = mapper.fromRpgCardJson(x);
+            return res;
           } catch (err) {
-            console.error("File is not in correct format", err);
+            console.error(err);
+            return undefined;
           }
-
-          if (!--count) {
-            allRead();
-          }
-        };
-
-        reader.readAsText(f);
-      }
-
-      e.srcElement.form.reset();
+        })
+        .filter((x) => x);
+      this.cards = mapped;
     },
     clear(e) {
       storage.clear();
@@ -190,6 +154,7 @@ export default {
     "card-simplified": cardSimplified,
     draggable,
     "card-sorter": cardSorter,
+    "rpg-cards-loader": rpgCardsLoader,
   },
 };
 </script>
