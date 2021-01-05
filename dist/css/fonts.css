@@ -1,0 +1,28 @@
+/* Copied from https://raw.githubusercontent.com/colinmarc/colinmarc.com/dndspells/dndspells/fonts.css */
+
+@font-face {
+    font-family: 'Mr Eaves Smallcaps';
+    src: url('fonts/mr_eaves_small_caps-webfont.woff2') format('woff2'),
+         url('fonts/mr_eaves_small_caps-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: BookInsanity;
+    src: url('fonts/bookinsanity-webfont.woff2') format('woff2'),
+         url('fonts/bookinsanity-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: BookInsanity;
+    src: url('fonts/bookinsanity_bold-webfont.woff2') format('woff2'),
+         url('fonts/bookinsanity_bold-webfont.woff') format('woff');
+    font-weight: bold;
+	font-style: normal;
+}
