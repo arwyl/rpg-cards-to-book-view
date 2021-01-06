@@ -11,7 +11,7 @@
         >
         and press Print.
         <br />
-        You can reorder cards anyway you want by dragging them.
+        You can reorder cards anyway you want by dragging their title.
         <br />
         Tested only in
         <a target="_blank" href="https://www.google.com/chrome/"
@@ -83,6 +83,7 @@
           item-key="title"
           @change="store"
           drag-class="rpg-card-drag"
+          handle=".title"
         >
           <template #item="{ element }">
             <card :modelValue="element"></card>
@@ -150,6 +151,7 @@ export default {
         })
         .filter((x) => x);
       this.cards = mapped;
+      this.store();
     },
     clear(e) {
       storage.clear();
@@ -175,12 +177,14 @@ export default {
 </script>
 
 <style scoped>
-article {
-  cursor: move;
-}
-
 article.rpg-card-drag {
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+</style>
+
+<style>
+.title {
+  cursor: move;
 }
 </style>

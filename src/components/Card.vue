@@ -1,8 +1,6 @@
 <template>
   <article>
-    <div class="title">
-      <strong>{{ modelValue.title }}</strong>
-    </div>
+    <title-el :modelValue="modelValue.title"></title-el>
 
     <template v-for="(elem, index) in modelValue.elements">
       <bullet
@@ -65,6 +63,7 @@ import property from "./elements/Property.vue";
 import section from "./elements/Section.vue";
 import subtitle from "./elements/Subtitle.vue";
 import text from "./elements/Text.vue";
+import title from "./Title.vue";
 
 import Card from "../models/card";
 import types from "../models/elements/types";
@@ -88,6 +87,7 @@ export default {
     "section-el": section,
     subtitle,
     "text-el": text,
+    "title-el": title,
   },
 };
 </script>
@@ -103,11 +103,5 @@ article {
 article > * {
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-}
-
-.title {
-  font-size: 1.5rem;
-  font-family: "Mr Eaves Smallcaps", serif;
-  color: #58170d;
 }
 </style>
