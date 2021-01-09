@@ -1,10 +1,11 @@
 <template>
-  <div class="container">
+  <section class="container">
     <section class="nonprintable">
-      <h2>rpg-cards-to-book-view</h2>
-      <br />
+      <section>
+        <h2>rpg-cards-to-book-view</h2>
+      </section>
 
-      <div class="p-3 mb-2 bg-info text-dark">
+      <section class="mt-4 p-3 bg-info text-dark">
         Load any number of .json files with arrays of
         <a target="_blank" href="https://crobi.github.io/rpg-cards/"
           >rpg cards</a
@@ -17,86 +18,85 @@
         <a target="_blank" href="https://www.google.com/chrome/"
           >Google Chrome</a
         >. Probably will work in any <strong>modern</strong> browser.
-      </div>
+      </section>
 
-      <p>
-        Loaded cards: <span id="span-count">{{ cards.length }}</span>
-      </p>
+      <section class="mt-3">
+        <h6>Sorting</h6>
+        <card-sorter @sort-changed="sort"></card-sorter>
+      </section>
 
-      <label>Sorting</label>
-      <card-sorter @sort-changed="sort"></card-sorter>
-
-      <div class="d-md-flex d-flex-row">
-        <div class="p-2">
+      <section class="d-md-flex d-flex-row mt-3">
+        <div class="col-md-auto me-md-2">
           <rpg-cards-loader
             @loaded="load"
             @onError="onError"
           ></rpg-cards-loader>
         </div>
-        <div class="p-2">
+        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
           <button class="btn btn-primary" type="button" @click="loadExample">
             Load example
           </button>
         </div>
-        <div class="p-2">
+        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
           <button class="btn btn-primary" type="button" @click="download">
             Save to file
           </button>
         </div>
-        <div class="p-2">
+        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
           <button class="btn btn-danger" type="button" @click="clear">
             Clear cards
           </button>
         </div>
-        <div class="p-2">
+        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
           <button class="btn btn-success" type="button" @click="print">
             Print
           </button>
         </div>
-        <div class="p-2">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="cb-useSimplifiedView"
-              v-model="useSimplifiedView"
-            />
-            <label class="form-check-label" for="cb-useSimplifiedView">
-              Use simplified view
-            </label>
-          </div>
+        <div class="col-md-auto me-md-2 mt-2 mt-md-0 form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="cb-useSimplifiedView"
+            v-model="useSimplifiedView"
+          />
+          <label class="form-check-label" for="cb-useSimplifiedView">
+            Use simplified view
+          </label>
         </div>
-      </div>
+      </section>
+      <section class="mt-3">
+        <p>
+          Loaded cards: <span id="span-count">{{ cards.length }}</span>
+        </p>
+      </section>
       <hr />
     </section>
-    <section>
-      <template v-if="useSimplifiedView">
-        <draggable
-          v-model="cards"
-          item-key="title"
-          @change="store"
-          drag-class="rpg-card-drag"
-        >
-          <template #item="{ element }">
-            <card-simplified :modelValue="element"></card-simplified>
-          </template>
-        </draggable>
+    <draggable
+      v-if="useSimplifiedView"
+      v-model="cards"
+      item-key="title"
+      @change="store"
+      drag-class="rpg-card-drag"
+      tag="section"
+    >
+      <template #item="{ element }">
+        <card-simplified :modelValue="element"></card-simplified>
       </template>
-      <template v-else>
-        <draggable
-          v-model="cards"
-          item-key="title"
-          @change="store"
-          drag-class="rpg-card-drag"
-          handle=".title"
-        >
-          <template #item="{ element }">
-            <card :modelValue="element"></card>
-          </template>
-        </draggable>
+    </draggable>
+    <draggable
+      v-else
+      v-model="cards"
+      item-key="title"
+      @change="store"
+      drag-class="rpg-card-drag"
+      handle=".title"
+      tag="section"
+    >
+      <template #item="{ element }">
+        <card :modelValue="element"></card>
       </template>
-    </section>
-  </div>
+    </draggable>
+  </section>
 </template>
 
 <script>

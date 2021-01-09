@@ -1,14 +1,11 @@
 <template>
   <article>
     <title-el :modelValue="modelValue.title"></title-el>
-
-    <template v-for="(elem, index) in modelValue.elements">
-      <dynamic-element
-        :modelValue="elem"
-        :key="index"
-        v-if="isKnown(elem)"
-      ></dynamic-element>
-    </template>
+    <dynamic-element
+      v-for="(elem, index) in knownElements"
+      :modelValue="elem"
+      :key="index"
+    ></dynamic-element>
   </article>
 </template>
 
@@ -22,9 +19,11 @@ export default {
   props: {
     modelValue: Card,
   },
-  methods: {
-    isKnown(elem) {
-      return dynamicElement.isKnownType(elem.type);
+  computed: {
+    knownElements() {
+      return this.modelValue.elements.filter((e) =>
+        dynamicElement.isKnownType(e.type)
+      );
     },
   },
   components: {

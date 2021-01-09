@@ -1,60 +1,55 @@
 <template>
-  <section>
-    <div class="d-md-flex d-flex-row">
-      <div class="p-2">
-        <select
-          class="form-control"
-          v-model="by"
-          @change="byElement = cardElementSort.SUBTITLE"
-        >
-          <option :value="cardSort.TITLE">Title</option>
-          <option :value="cardSort.SPELLEVEL">
-            Spell level (experimental)
-          </option>
-          <option :value="cardSort.ELEMENT">Element</option>
-          <option :value="cardSort.FIRSTTAG">First tag name</option>
-        </select>
-      </div>
-      <div
-        class="p-2"
-        v-if="by === cardSort.ELEMENT"
-        @change="propertyName = ''"
+  <section class="d-md-flex d-flex-row">
+    <div class="col-md-auto me-md-2">
+      <select
+        class="form-control"
+        v-model="by"
+        @change="byElement = cardElementSort.SUBTITLE"
       >
-        <select class="form-control" v-model="byElement">
-          <option :value="cardElementSort.SUBTITLE">Subtitle</option>
-          <option :value="cardElementSort.PROPERTY">
-            First property with name
-          </option>
-        </select>
-      </div>
-      <div class="p-2" v-if="byElement === cardElementSort.PROPERTY">
+        <option :value="cardSort.TITLE">Title</option>
+        <option :value="cardSort.SPELLEVEL">Spell level (experimental)</option>
+        <option :value="cardSort.ELEMENT">Element</option>
+        <option :value="cardSort.FIRSTTAG">First tag name</option>
+      </select>
+    </div>
+    <div
+      class="col-md-auto me-md-2 mt-2 mt-md-0"
+      v-if="by === cardSort.ELEMENT"
+      @change="propertyName = ''"
+    >
+      <select class="form-control" v-model="byElement">
+        <option :value="cardElementSort.SUBTITLE">Subtitle</option>
+        <option :value="cardElementSort.PROPERTY">
+          First property with name
+        </option>
+      </select>
+    </div>
+    <div
+      class="col-md-auto me-md-2 mt-2 mt-md-0"
+      v-if="byElement === cardElementSort.PROPERTY"
+    >
+      <input
+        class="form-control"
+        type="text"
+        v-model="propertyName"
+        placeholder="Enter property name"
+      />
+    </div>
+    <div class="col-md-auto d-flex d-flex-row mt-2 mt-md-0">
+      <div class="form-check me-2">
         <input
-          class="form-control"
-          type="text"
-          v-model="propertyName"
-          placeholder="Enter property name"
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="cb-sortDesc"
+          v-model="desc"
         />
+        <label class="form-check-label" for="cb-sortDesc"> Descending </label>
       </div>
-      <div class="d-flex d-flex-row">
-        <div class="p-2">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="cb-sortDesc"
-              v-model="desc"
-            />
-            <label class="form-check-label" for="cb-sortDesc">
-              Descending
-            </label>
-          </div>
-        </div>
-        <div class="p-2">
-          <button class="btn btn-primary" type="button" @click="sort">
-            Sort
-          </button>
-        </div>
+      <div>
+        <button class="btn btn-primary" type="button" @click="sort">
+          Sort
+        </button>
       </div>
     </div>
   </section>
