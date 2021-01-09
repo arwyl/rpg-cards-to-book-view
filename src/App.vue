@@ -34,6 +34,11 @@
           ></rpg-cards-loader>
         </div>
         <div class="p-2">
+          <button class="btn btn-primary" type="button" @click="loadExample">
+            Load example
+          </button>
+        </div>
+        <div class="p-2">
           <button class="btn btn-primary" type="button" @click="download">
             Save to file
           </button>
@@ -107,6 +112,8 @@ import mapper from "./services/card-mapper";
 import sorter from "./services/card-sorter";
 import Exception from "./models/exception";
 
+import example from "./example";
+
 const toast = useToast();
 
 let initialCards;
@@ -114,6 +121,21 @@ let initialCards;
 function showError(err) {
   console.error(err.message, err);
   toast.error(err.message + "\nSee console output for details.");
+}
+
+function mapCards(rpgCards) {
+  const mapped = rpgCards
+    .map((x) => {
+      try {
+        const res = mapper.fromRpgCardJson(x);
+        return res;
+      } catch (err) {
+        showError(new Exception("Error during parsing example file.", err));
+        return undefined;
+      }
+    })
+    .filter((x) => x);
+  return mapped;
 }
 
 try {
@@ -138,18 +160,14 @@ export default {
       this.cards = sorter(this.cards, e.elementSelector, e.desc);
       this.store();
     },
+    loadExample(e) {
+      const mapped = mapCards(example);
+      this.cards = mapped;
+      this.store();
+      e.target.blur();
+    },
     load(e) {
-      const mapped = e.rpgCards
-        .map((x) => {
-          try {
-            const res = mapper.fromRpgCardJson(x);
-            return res;
-          } catch (err) {
-            showError(new Exception("Error during parsing file.", err));
-            return undefined;
-          }
-        })
-        .filter((x) => x);
+      const mapped = mapCards(e.rpgCards);
       this.cards = mapped;
       this.store();
     },
