@@ -26,7 +26,7 @@
       <label>Sorting</label>
       <card-sorter @sort-changed="sort"></card-sorter>
 
-      <div class="d-flex d-flex-row">
+      <div class="d-md-flex d-flex-row">
         <div class="p-2">
           <rpg-cards-loader
             @loaded="load"

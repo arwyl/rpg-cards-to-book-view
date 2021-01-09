@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="d-flex d-flex-row">
+    <div class="d-md-flex d-flex-row">
       <div class="p-2">
         <select
           class="form-control"
@@ -35,22 +35,26 @@
           placeholder="Enter property name"
         />
       </div>
-      <div class="p-2">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="cb-sortDesc"
-            v-model="desc"
-          />
-          <label class="form-check-label" for="cb-sortDesc"> Descending </label>
+      <div class="d-flex d-flex-row">
+        <div class="p-2">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="cb-sortDesc"
+              v-model="desc"
+            />
+            <label class="form-check-label" for="cb-sortDesc">
+              Descending
+            </label>
+          </div>
         </div>
-      </div>
-      <div class="p-2">
-        <button class="btn btn-primary" type="button" @click="sort">
-          Sort
-        </button>
+        <div class="p-2">
+          <button class="btn btn-primary" type="button" @click="sort">
+            Sort
+          </button>
+        </div>
       </div>
     </div>
   </section>
