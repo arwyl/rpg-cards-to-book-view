@@ -1,6 +1,6 @@
 <template>
-  <section class="d-md-flex d-flex-row">
-    <div class="col-md-auto me-md-2">
+  <section class="row g-2">
+    <div class="col-md-auto">
       <select
         class="form-control"
         v-model="by"
@@ -13,7 +13,7 @@
       </select>
     </div>
     <div
-      class="col-md-auto me-md-2 mt-2 mt-md-0"
+      class="col-md-auto"
       v-if="by === cardSort.ELEMENT"
       @change="propertyName = ''"
     >
@@ -24,10 +24,7 @@
         </option>
       </select>
     </div>
-    <div
-      class="col-md-auto me-md-2 mt-2 mt-md-0"
-      v-if="byElement === cardElementSort.PROPERTY"
-    >
+    <div class="col-md-auto" v-if="byElement === cardElementSort.PROPERTY">
       <input
         class="form-control"
         type="text"
@@ -35,21 +32,27 @@
         placeholder="Enter property name"
       />
     </div>
-    <div class="col-md-auto d-flex d-flex-row mt-2 mt-md-0">
-      <div class="form-check me-2">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value=""
-          id="cb-sortDesc"
-          v-model="desc"
-        />
-        <label class="form-check-label" for="cb-sortDesc"> Descending </label>
-      </div>
-      <div>
-        <button class="btn btn-primary" type="button" @click="sort">
-          Sort
-        </button>
+    <div class="col-md-auto">
+      <div class="row gx-2 align-items-center">
+        <div class="col-auto">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="cb-sortDesc"
+              v-model="desc"
+            />
+            <label class="form-check-label" for="cb-sortDesc">
+              Descending
+            </label>
+          </div>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-primary" type="button" @click="sort">
+            Sort
+          </button>
+        </div>
       </div>
     </div>
   </section>

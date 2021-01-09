@@ -25,43 +25,45 @@
         <card-sorter @sort-changed="sort"></card-sorter>
       </section>
 
-      <section class="d-md-flex d-flex-row mt-3">
-        <div class="col-md-auto me-md-2">
+      <section class="row g-2 mt-2 align-items-center">
+        <div class="col-md-auto">
           <rpg-cards-loader
             @loaded="load"
             @onError="onError"
           ></rpg-cards-loader>
         </div>
-        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
+        <div class="col-md-auto">
           <button class="btn btn-primary" type="button" @click="loadExample">
             Load example
           </button>
         </div>
-        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
+        <div class="col-md-auto">
           <button class="btn btn-primary" type="button" @click="download">
             Save to file
           </button>
         </div>
-        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
+        <div class="col-md-auto">
           <button class="btn btn-danger" type="button" @click="clear">
             Clear cards
           </button>
         </div>
-        <div class="col-md-auto me-md-2 mt-2 mt-md-0">
+        <div class="col-md-auto">
           <button class="btn btn-success" type="button" @click="print">
             Print
           </button>
         </div>
-        <div class="col-md-auto me-md-2 mt-2 mt-md-0 form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="cb-useSimplifiedView"
-            v-model="useSimplifiedView"
-          />
-          <label class="form-check-label" for="cb-useSimplifiedView">
-            Use simplified view
-          </label>
+        <div class="col-md-auto">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="cb-useSimplifiedView"
+              v-model="useSimplifiedView"
+            />
+            <label class="form-check-label" for="cb-useSimplifiedView">
+              Use simplified view
+            </label>
+          </div>
         </div>
       </section>
       <section class="mt-3">
