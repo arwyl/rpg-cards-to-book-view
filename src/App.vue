@@ -197,6 +197,10 @@ export default {
 </script>
 
 <style scoped>
+article {
+  page-break-inside: avoid;
+}
+
 article.rpg-card-drag {
   border: 1px solid #ccc;
   border-radius: 4px;
