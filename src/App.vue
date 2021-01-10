@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <section class="nonprintable">
+    <section class="d-print-none">
       <section>
         <h2>rpg-cards-to-book-view</h2>
       </section>
