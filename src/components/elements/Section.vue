@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-2">
     <strong><u v-html="modelValue.name"></u></strong>:
     <span v-html="modelValue.value"></span>
   </div>
@@ -15,9 +15,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-div {
-  margin-top: 0.8rem;
-}
-</style>

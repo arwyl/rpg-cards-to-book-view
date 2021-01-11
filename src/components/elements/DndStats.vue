@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <table>
       <tbody>
         <tr>
@@ -33,9 +33,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-div {
-  margin: 0.5rem;
-}
-</style>
