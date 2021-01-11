@@ -1,5 +1,5 @@
 <template>
-  <div class="title">
+  <div class="fs-4 title">
     <strong>{{ modelValue }}</strong>
   </div>
 </template>
@@ -15,8 +15,6 @@ export default {
 
 <style scoped>
 .title {
-  font-size: 1.5rem;
   font-family: "Mr Eaves Smallcaps", serif;
-  color: #58170d;
 }
 </style>

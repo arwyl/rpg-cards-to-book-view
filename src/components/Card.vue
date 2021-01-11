@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="pb-3">
     <title-el :modelValue="modelValue.title"></title-el>
     <dynamic-element
       v-for="(elem, index) in knownElements"
@@ -37,7 +37,6 @@ export default {
 article {
   font-family: BookInsanity, Georgia, "Times New Roman", Times, serif;
   font-size: 0.8rem;
-  padding-bottom: 1rem;
 }
 
 article > * {
