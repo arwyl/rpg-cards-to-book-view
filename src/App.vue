@@ -110,15 +110,13 @@ import rpgCardsLoader from "./components/RpgCardsLoader.vue";
 import draggable from "vuedraggable";
 
 import storage from "./services/card-storage";
-import mapper from "./services/card-mapper";
+import { fromRpgCardJson, toRpgCardJson } from "./services/card-mapper";
 import sorter from "./services/card-sorter";
 import Exception from "./models/exception";
 
 import example from "./example";
 
 const toast = useToast();
-
-let initialCards;
 
 function showError(err) {
   console.error(err.message, err);
@@ -129,7 +127,7 @@ function mapCards(rpgCards) {
   const mapped = rpgCards
     .map((x) => {
       try {
-        const res = mapper.fromRpgCardJson(x);
+        const res = fromRpgCardJson(x);
         return res;
       } catch (err) {
         showError(new Exception("Error during parsing example file.", err));
@@ -139,6 +137,8 @@ function mapCards(rpgCards) {
     .filter((x) => x);
   return mapped;
 }
+
+let initialCards;
 
 try {
   initialCards = storage.get();
@@ -184,6 +184,26 @@ export default {
     },
     onError(e) {
       showError(e.exception);
+    },
+    download(e) {
+      const rpgCards = this.cards.map((x) => toRpgCardJson(x));
+
+      const json = JSON.stringify(rpgCards, null, 4);
+
+      const element = document.createElement("a");
+      element.setAttribute(
+        "href",
+        "data:application/JSON;charset=utf-8," + encodeURIComponent(json)
+      );
+      element.setAttribute("download", "rpg-cards.json");
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+      e.target.blur();
     },
   },
   components: {

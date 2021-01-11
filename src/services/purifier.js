@@ -18,7 +18,4 @@ function purifyUrl(url) {
     return isValidURL(url) ? url : undefined;
 }
 
-export default {
-    purify,
-    purifyUrl
-}
+export { purify, purifyUrl }

@@ -9,25 +9,25 @@ import Text from "../models/elements/text";
 import DndStats from "../models/elements/dnd-stats";
 import types from "../models/elements/types";
 import Unknown from "../models/elements/unknown";
-import purifier from "./purifier";
+import { purify, purifyUrl } from "./purifier";
 
 const DELIMITER = " | ";
 
 function mapElementFromRpgCardJson(name, params) {
     switch (name) {
-        case types.BULLET: return new Bullet(purifier.purify(params[0]));
+        case types.BULLET: return new Bullet(purify(params[0]));
 
-        case types.DESCRIPTION: return new Description(purifier.purify(params[0]), purifier.purify(params[1]));
+        case types.DESCRIPTION: return new Description(purify(params[0]), purify(params[1]));
 
-        case types.PICTURE: return new Picture(purifier.purifyUrl(params[0]), parseInt(params[1], 10));
+        case types.PICTURE: return new Picture(purifyUrl(params[0]), parseInt(params[1], 10));
 
-        case types.PROPERTY: return new Property(purifier.purify(params[0]), purifier.purify(params[1]));
+        case types.PROPERTY: return new Property(purify(params[0]), purify(params[1]));
 
-        case types.SECTION: return new Section(purifier.purify(params[0]), purifier.purify(params[1]));
+        case types.SECTION: return new Section(purify(params[0]), purify(params[1]));
 
-        case types.SUBTITLE: return new Subtitle(purifier.purify(params[0]));
+        case types.SUBTITLE: return new Subtitle(purify(params[0]));
 
-        case types.TEXT: return new Text(purifier.purify(params[0]));
+        case types.TEXT: return new Text(purify(params[0]));
 
         case types.DNDSTATS: return new DndStats(...params.map(x => parseInt(x, 10)));
 
@@ -60,11 +60,11 @@ function mapElementToRpgCardJson(elem) {
 function fromRpgCardJson(rpgCardJson) {
     if (!rpgCardJson) throw new Error("Argumet 'rpgCardJson' should have value");
 
-    let contents = (rpgCardJson.contents || []).map(x => x.split(DELIMITER).map(str => str.trim()));
+    const contents = (rpgCardJson.contents || []).map(x => x.split(DELIMITER).map(str => str.trim()));
 
-    let elements = contents.map(x => mapElementFromRpgCardJson(x[0], x.splice(1)));
+    const elements = contents.map(x => mapElementFromRpgCardJson(x[0], x.splice(1)));
 
-    let tags = (rpgCardJson.tags || []).map(x => x.trim().toLowerCase());
+    const tags = (rpgCardJson.tags || []).map(x => x.trim().toLowerCase());
 
     return new Card(
         rpgCardJson.title,
@@ -81,7 +81,7 @@ function fromRpgCardJson(rpgCardJson) {
 function toRpgCardJson(card) {
     if (!card) throw new Error("Argumet 'card' should have value");
 
-    let contents = card.elements.map(x => mapElementToRpgCardJson(x)).join("\r\n");
+    const contents = card.elements.map(x => mapElementToRpgCardJson(x)).join("\r\n");
 
     return {
         title: card.title,
@@ -95,7 +95,4 @@ function toRpgCardJson(card) {
     };
 }
 
-export default {
-    fromRpgCardJson: fromRpgCardJson,
-    toRpgCardJson: toRpgCardJson
-}
+export { fromRpgCardJson, toRpgCardJson }

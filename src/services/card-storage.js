@@ -39,7 +39,7 @@ function mapElementFromRaw(elem) {
 function fromRaw(card) {
     if (!card) throw new Error("Argumet 'card' should have value");
 
-    let elements = card.elements.map(x => mapElementFromRaw(x));
+    const elements = card.elements.map(x => mapElementFromRaw(x));
 
     return new Card(
         card.title,

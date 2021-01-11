@@ -1,8 +1,8 @@
 function sort(cards, elementSelector, desc) {
     return cards.sort((a, b) => {
         if (elementSelector) {
-            let aEl = elementSelector(a);
-            let bEl = elementSelector(b);
+            const aEl = elementSelector(a);
+            const bEl = elementSelector(b);
 
             if (desc) {
                 if (aEl > bEl) return -1;

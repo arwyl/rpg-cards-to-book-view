@@ -5,9 +5,9 @@ class DndStats extends ElementBase {
     constructor(str, dex, con, int, wis, cha) {
         super(types.DNDSTATS);
 
-        let stats = [10, 10, 10, 10, 10, 10];
-        let mods = [0, 0, 0, 0, 0, 0];
-        let params = [str, dex, con, int, wis, cha];
+        const stats = [10, 10, 10, 10, 10, 10];
+        const mods = [0, 0, 0, 0, 0, 0];
+        const params = [str, dex, con, int, wis, cha];
         for (let i = 0; i < 6; ++i) {
             stats[i] = params[i] || 0;
             var mod = Math.floor(((stats[i] - 10) / 2));
